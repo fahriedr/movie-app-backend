@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -19,8 +20,13 @@ class MovieController extends Controller
     //Get newest movies
     public function index()
     {
+        $genre = Http::get("https://api.themoviedb.org/3/genre/movie/list?api_key=" . $this->tmdb_api_key . "&page=1");
+        $genre = $genre['genres'];
+
         $response = Http::get($this->tmdb_base_url . "now_playing?api_key=" . $this->tmdb_api_key);
-        return json_encode($response['results']);
+        $movies = $response['results'];
+
+        return response()->json(['movies' => $movies, 'genre' => $genre]);
     }
 
     //Get popular movies
