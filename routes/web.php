@@ -1,6 +1,8 @@
 <?php
 
+use Facade\FlareClient\View;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View as ViewView;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/movie', 'MovieController@index');
-Route::get('/movie/{query}', 'MovieController@searchMovie');
-Route::get('/movie/trending', 'MovieController@trendingMovies');
-Route::get('/movie/popular', 'MovieController@popularMovies');
+Route::get('/movie/find/{query}/{page}', 'MovieController@searchMovie');
+Route::get('/movie/top-rated/{page}', 'MovieController@topRatedMovies');
+Route::get('/movie/popular/{page}', 'MovieController@popularMovies');
+Route::get('/movie/{id}', 'MovieController@getMovieDetail');

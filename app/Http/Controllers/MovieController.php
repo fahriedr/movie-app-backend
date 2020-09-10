@@ -30,23 +30,30 @@ class MovieController extends Controller
     }
 
     //Get popular movies
-    public function popularMovies()
+    public function popularMovies($page)
     {
-        $response = Http::get($this->tmdb_base_url . "popular?api_key=" . $this->tmdb_api_key);
+        $response = Http::get($this->tmdb_base_url . "popular?api_key=" . $this->tmdb_api_key . "&page=" . $page);
         return json_encode($response['results']);
     }
 
     //Get searched movie by query
-    public function searchMovie($query)
+    public function searchMovie($query, $page)
     {
-        $response = Http::get("https://api.themoviedb.org/3/search/movie/?query=" . $query . "&api_key=" . $this->tmdb_api_key);
+        $response = Http::get("https://api.themoviedb.org/3/search/movie/?query=" . $query . "&api_key=" . $this->tmdb_api_key . "&page=" . $page);
         return json_encode($response['results']);
     }
 
     //Get trending movies
-    public function trendingMovies()
+    public function topRatedMovies($page)
     {
-        $response = Http::get("https://api.themoviedb.org/3/trending/all/day?api_key=" . $this->tmdb_api_key);
-        return json_encode($response);
+        $response = Http::get($this->tmdb_base_url . "top_rated?api_key=" . $this->tmdb_api_key . "&page=" . $page);
+        return json_encode($response['results']);
+    }
+
+    public function getMovieDetail($id)
+    {
+        // $number = (int)$id;
+        $response = Http::get("https://api.themoviedb.org/3/movie/" . $id . "?api_key=" . $this->tmdb_api_key);
+        return $response;
     }
 }
