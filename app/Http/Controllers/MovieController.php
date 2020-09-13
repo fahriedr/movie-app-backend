@@ -18,12 +18,12 @@ class MovieController extends Controller
     }
 
     //Get newest movies
-    public function index()
+    public function index($page)
     {
-        $genre = Http::get("https://api.themoviedb.org/3/genre/movie/list?api_key=" . $this->tmdb_api_key . "&page=1");
+        $genre = Http::get("https://api.themoviedb.org/3/genre/movie/list?api_key=" . $this->tmdb_api_key );
         $genre = $genre['genres'];
 
-        $response = Http::get($this->tmdb_base_url . "now_playing?api_key=" . $this->tmdb_api_key);
+        $response = Http::get($this->tmdb_base_url . "now_playing?api_key=" . $this->tmdb_api_key . "&page=". $page);
         $movies = $response['results'];
 
         return response()->json(['movies' => $movies, 'genre' => $genre]);
@@ -50,6 +50,7 @@ class MovieController extends Controller
         return json_encode($response['results']);
     }
 
+    //Get the movie detail by ID
     public function getMovieDetail($id)
     {
         // $number = (int)$id;

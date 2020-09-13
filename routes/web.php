@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/movie', 'MovieController@index');
+Route::get('/movie/now-playing/{page}', 'MovieController@index');
 Route::get('/movie/find/{query}/{page}', 'MovieController@searchMovie');
 Route::get('/movie/top-rated/{page}', 'MovieController@topRatedMovies');
 Route::get('/movie/popular/{page}', 'MovieController@popularMovies');
